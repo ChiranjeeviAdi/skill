@@ -1,0 +1,66 @@
+<div class="row border-bottom white-bg" ng-controller="DropdownController as vm">
+    <nav class="navbar navbar-top" role="navigation">
+        <div class="navbar-header">
+            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button" ng-click="vm.isCollapsed = !vm.isCollapsed">
+                <i class="fa fa-reorder"></i>
+            </button>
+            <a ui-sref="index.dashboard" class="navbar-brand">SmartSkill</a>
+        </div>
+        <div class="navbar-collapse collapse" uib-collapse="vm.isCollapsed" id="navbar">
+            <ul class="nav navbar-nav" id="mainNavBarDiv">
+                <li class="active" id="dashboardUrl">
+                    <a ui-sref="index.dashboard"> Dashboard </a>
+                </li>
+                <li id="quizUrl">
+                    <a ui-sref="index.quiz"> Quiz </a>
+                </li>
+                <!-- <li uib-dropdown>
+                    <a href uib-dropdown-toggle> Quiz <span class="caret"></span></a>
+                    <ul role="menu" uib-dropdown-menu>
+                        <li><a ui-sref="index.tables">Tables</a></li>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                    </ul>
+                </li>
+                <li uib-dropdown>
+                    <a href uib-dropdown-toggle> Menu item <span class="caret"></span></a>
+                    <ul role="menu" uib-dropdown-menu>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                    </ul>
+                </li>
+                <li uib-dropdown>
+                    <a  href uib-dropdown-toggle> Menu item <span class="caret"></span></a>
+                    <ul role="menu" uib-dropdown-menu>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                    </ul>
+                </li>
+                <li uib-dropdown>
+                    <a href uib-dropdown-toggle> Menu item <span class="caret"></span></a>
+                    <ul role="menu" uib-dropdown-menu>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                    </ul>
+                </li> -->
+
+
+
+            </ul>
+            <ul class="nav navbar-top-links navbar-right">
+                <li>
+                    <a ui-sref="logout">
+                        <i class="fa fa-sign-out"></i> Log out
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>

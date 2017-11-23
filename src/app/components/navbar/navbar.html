@@ -1,0 +1,15 @@
+<div id="wrapper" class="top-navigation">
+    <!-- Navigation -->
+    <div ng-include="'app/components/navbar/navigation.html'"></div>
+    <div id="page-wrapper" class="gray-bg {{$state.current.name}}">
+
+        <!-- Main view  -->
+        <div ui-view></div>
+
+        <!-- Footer -->
+<!--         <div ng-include="'app/components/common/footer.html'"></div>
+ -->
+    </div>
+    <!-- End page wrapper-->
+
+</div>

@@ -1,0 +1,1272 @@
+
+    <div class="wrapper wrapper-content">
+		<div class="row ibox-content text-center">
+			<div class="btn-group">
+                <label class="btn btn-success active" ng-model="quizquestion.radioModel" uib-btn-radio="'basic'" ng-change="quizquestion.showDivs('basic')">Basic Info</label>
+                <label class="btn btn-success" ng-model="quizquestion.radioModel" uib-btn-radio="'add'" ng-change="quizquestion.showDivs('add')">Add Question</label>
+                <label class="btn btn-success" ng-model="quizquestion.radioModel" uib-btn-radio="'view'" ng-change="quizquestion.showDivs('view')">View Questions</label>
+            </div>
+            <div class="col-md-12 text-right" ng-cloak ng-if="quizquestion.quiz.json_updated_flag!=2">
+            	<button type="button" id="btnSubmit" class="btn btn-success" ng-click="quizquestion.generateQuizUrl()">Generate And Submit Quiz Data</button>
+            </div>
+        </div>
+    	<div class="row ibox-content" ng-if="quizquestion.radioModel=='basic'">
+    			<div class="">
+    				<div class="col-md-12 form-group margin">
+    					<div class="col-md-6">
+    						<label class="col-md-2">Quiz Title</label>
+    						<label class="col-md-1">:</label>
+    						<div class="col-md-3">
+    							{{quizquestion.quiz.name}}
+    						</div>
+    					</div>
+    					
+    				</div>
+    				<div class="col-md-12  form-group margin">
+    					<div class="col-md-6">
+    						<label class="col-md-2">Quiz Type :</label>
+    						<label class="col-md-1">:</label>
+    						<div class="col-md-3">
+	    						{{quizquestion.showQuizType(quizquestion.quiz.quiz_type)}}
+	    					</div>
+    					</div>
+    					
+    				</div>
+    			</div>
+                <div class="col-md-12  form-group margin" ng-if="quizquestion.quiz.quiz_type==1">
+                    <div class="col-md-2">
+                        <label>Show Answer Result :</label>
+                    </div>
+                    <div class="col-md-8 text-left">
+                        
+                        <div class="btn-group">
+                            <label class="btn btn-success active" ng-model="quizquestion.question.answer_result" uib-btn-radio="'0'" ng-change="quizquestion.updateQuizBasicJsonInfo(quizquestion.quiz.quiz_type)">Don't show answer result</label>
+                            <label class="btn btn-success" ng-model="quizquestion.question.answer_result" uib-btn-radio="'1'" ng-change="quizquestion.updateQuizBasicJsonInfo(quizquestion.quiz.quiz_type)">Show only correct answer result</label>
+                            <label class="btn btn-success" ng-model="quizquestion.question.answer_result" uib-btn-radio="'2'" ng-change="quizquestion.updateQuizBasicJsonInfo(quizquestion.quiz.quiz_type)">Show answer for both correct and wrong answer</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12  form-group margin" ng-if="quizquestion.quiz.quiz_type==4">
+                        <div class="col-md-6">
+                            <label class="col-md-2">Questions Topic</label>
+                            <label class="col-md-1">:</label>
+                            <div class="col-md-5">
+                                <input type="text" name="question_topic" id="question_topic" ng-model="quizquestion.question.question_topic" class="form-control">
+                            </div>
+                            <div class="col-md-1">
+                            <i class="fa fa-save fa-2x" ng-click="quizquestion.updateQuizBasicJsonInfo(quizquestion.quiz.quiz_type)" title="Update Question Topic"></i>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-md-12  form-group margin" ng-if="quizquestion.quiz.quiz_type==1">
+                    <div class="col-md-2">
+                        <label>Show Explanation :</label>
+                    </div>
+                    <div class="col-md-8 text-left">
+                        
+                        <div class="btn-group">
+                            <label class="btn btn-success active" ng-model="quizquestion.question.show_explanation" uib-btn-radio="'0'" ng-change="quizquestion.updateQuizBasicJsonInfo(quizquestion.quiz.quiz_type)">Don't show explanation</label>
+                            <label class="btn btn-success" ng-model="quizquestion.question.show_explanation" uib-btn-radio="'1'" ng-change="quizquestion.updateQuizBasicJsonInfo(quizquestion.quiz.quiz_type)">Show explanation for wrong answer</label>
+                            <label class="btn btn-success" ng-model="quizquestion.question.show_explanation" uib-btn-radio="'2'" ng-change="quizquestion.updateQuizBasicJsonInfo(quizquestion.quiz.quiz_type)">Show explanation for both correct and wrong answer</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12  form-group margin" ng-if="quizquestion.quiz.quiz_type==8">
+                    <div class="col-md-2">
+                        <label>Show Explanation :</label>
+                    </div>
+                    <div class="col-md-8 text-left">
+                        
+                        <div class="btn-group">
+                            <label class="btn btn-success active" ng-model="quizquestion.question.show_explanation" uib-btn-radio="'0'" ng-change="quizquestion.updateQuizBasicJsonInfo(quizquestion.quiz.quiz_type)">Don't show explanation</label>
+                            <label class="btn btn-success" ng-model="quizquestion.question.show_explanation" uib-btn-radio="'1'" ng-change="quizquestion.updateQuizBasicJsonInfo(quizquestion.quiz.quiz_type)">Show explanation for wrong answer</label>
+                            <label class="btn btn-success" ng-model="quizquestion.question.show_explanation" uib-btn-radio="'2'" ng-change="quizquestion.updateQuizBasicJsonInfo(quizquestion.quiz.quiz_type)">Show explanation for both correct and wrong answer</label>
+                        </div>
+                    </div>
+                </div>
+                <div class=" " ng-if="quizquestion.quiz.quiz_type==5">
+                    <div class="col-md-6 form-group margin">
+                        <label class="col-md-2">Video Url</label>
+                        <label class="col-md-1">:</label>
+                        <div class="col-md-5">
+                            <input type="text" name="videoUrl" id="videoUrl" ng-model="quizquestion.question.videoUrl" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group margin">
+                        <label class="col-md-2">Intro Heading</label>
+                        <label class="col-md-1">:</label>
+                        <div class="col-md-5">
+                            <input type="text" name="introHeading" id="introHeading" ng-model="quizquestion.question.introHeading" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group margin">
+                        <label class="col-md-2">Intro</label>
+                        <label class="col-md-1">:</label>
+                        <div class="col-md-5">
+                            <input type="text" name="intro" id="intro" ng-model="quizquestion.question.intro" class="form-control">
+                        </div>
+                        <div class="col-md-1">
+                        <i class="fa fa-save fa-2x" ng-click="quizquestion.updateQuizBasicJsonInfo(quizquestion.quiz.quiz_type)" title="Update Basic Info"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12  form-group margin" ng-if="quizquestion.quiz.quiz_type==7">
+                    <div class="col-md-2">
+                        <label>Show Explanation :</label>
+                    </div>
+                    <div class="col-md-8 text-left">
+                        
+                        <div class="btn-group">
+                            <label class="btn btn-success active" ng-model="quizquestion.question.show_explanation" uib-btn-radio="'0'" ng-change="quizquestion.updateQuizBasicJsonInfo(quizquestion.quiz.quiz_type)">Don't show explanation</label>
+                            <label class="btn btn-success" ng-model="quizquestion.question.show_explanation" uib-btn-radio="'1'" ng-change="quizquestion.updateQuizBasicJsonInfo(quizquestion.quiz.quiz_type)">Show explanation for wrong answer</label>
+                            <label class="btn btn-success" ng-model="quizquestion.question.show_explanation" uib-btn-radio="'2'" ng-change="quizquestion.updateQuizBasicJsonInfo(quizquestion.quiz.quiz_type)">Show explanation for both correct and wrong answer</label>
+                        </div>
+                    </div>
+                </div>
+    	</div>
+    	<div class="row ibox-content" ng-if="quizquestion.radioModel=='add'">
+
+            <!-- Bucket Game -->
+            <div class="row ibox-content" ng-if="quizquestion.quiz.quiz_type==8">
+                <form id="question_bucket_form" name="question_bucket_form">
+                    <!-- <div class="row margin" ng-repeat="bucket in quizquestion.question.buckets">
+                        <div class="col-md-1">
+                            <label>Bucket  {{bucket.index}} :</label>
+                        </div>
+                        <div class="col-md-4 text-left">
+                            <input id="bucket{{bucket.index}}" type="text" name="bucket{{bucket.index}}" class="form-control options" ng-model="bucket.bucket_text" placeholder="Bucket {{bucket.index}} Text" >
+                        </div>
+                        <span class="col-md-1 text-left" ng-if="$last&&bucket.index>2" ng-click="quizquestion.removeBucket($index)"><i class="fa fa-trash fa-2x"></i></span>
+
+                    </div> -->
+                    <!-- <div class="row margin">
+                        <div class="col-md-5 text-right">
+                            <a href="" ng-click="quizquestion.addNewBucket(quizquestion.question.buckets,quizquestion.quiz.quiz_type)">  Add New Bucket</a>
+                        </div>
+                    </div> -->
+                   <!--  <div class="row margin">
+                        <div class="col-md-1">
+                            <label>Question :</label>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <textarea id="question" name="question" rows="2" class="form-control" ng-model="quizquestion.question.question" ></textarea>
+                        </div>
+                    </div> -->
+                    <div class="row margin" ng-repeat="option in quizquestion.question.options">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <u>Option {{option.index}} Details:</u>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <label>Option {{option.index}} Text :</label>
+                                </div>
+                                <div class="col-md-4 text-left">
+                                    <input id="option{{option.index}}" type="text" name="option{{option.index}}" class="form-control options" ng-model="option.text" placeholder="Option {{option.index}} Text" >
+                                </div>
+
+                                <div class="col-md-1">
+                                    <label>Option {{option.index}} Bucket :</label>
+                                </div>
+                                <div class="col-md-2 text-left">
+                                    <select id="select{{option.index}}" name="select{{option.index}}" ng-model="option.bucket" class="form-control">
+                                        <option value="">Select</option>
+                                        <option ng-repeat="op in quizquestion.question.buckets" value="{{$index+1}}">{{op.bucket_text}}</option> 
+                                    </select> 
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <label>Option {{option.index}} Explanation:</label>
+                                </div>
+                                <div class="col-md-4 text-left">
+                                    <input id="explanation{{option.index}}" type="text" name="explanation{{option.index}}" class="form-control options" ng-model="option.explanation" placeholder="Option {{option.index}} Explanation" >
+                                </div>
+
+                                <div class="col-md-1">
+                                    <label>Option {{option.index}} Image :</label>
+                                </div>
+                                <div class="col-md-2 text-left">
+                                        <input type="file" id="image_url{{option.index}}" name="image_url{{option.index}}">
+                                </div>
+                                <div class="col-md-1">
+                                        <label>OR</label>
+                                </div> 
+                                <div class="col-md-2 text-left">
+                                    <input type="text" name="image_url_text{{option.index}}" id="image_url_text{{option.index}}" ng-model="option.image_url_text" class="form-control" placeholder="Image url">
+                                </div> 
+                                <div class="col-md-1">
+                                    
+                                    <span class=" text-left" ng-if="$last&&option.index>3" ng-click="quizquestion.removeLastOption($index)"><i class="fa fa-trash fa-2x"></i></span>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <label>Bucket 1 Text :</label>
+                                </div>
+                                <div class="col-md-4 text-left">
+                                    <input id="bucket_1_text{{option.index}}" type="text" name="bucket_1_text{{option.index}}" class="form-control options" ng-model="option.bucket_1_text" placeholder="Bucket 1 Text" >
+                                </div>
+
+                                <div class="col-md-1">
+                                    <label>Bucket 2 Text :</label>
+                                </div>
+                                <div class="col-md-2 text-left">
+                                    <input id="bucket_2_text{{option.index}}" type="text" name="bucket_2_text{{option.index}}" class="form-control options" ng-model="option.bucket_2_text" placeholder="Bucket 2 Text" > 
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="row margin">
+                        <div class="col-md-5 text-right">
+                            <a href="" ng-click="quizquestion.addNewOption(quizquestion.question.options,quizquestion.quiz.quiz_type)">  Add New Option</a>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-left margin" >
+                        <button class="btn btn-success" type="button" title="Add Question To Quiz" ng-click="quizquestion.addBucketQuestionToQuiz(quizquestion.quiz.quiz_type)">Add Question To Quiz</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Match The Following -->
+    		<div class="row ibox-content" ng-if="quizquestion.quiz.quiz_type==6">
+    			<div class="col-md-6   ">
+    				<form id="questionForm" name="questionForm">
+    					
+    					<div class="col-md-12 margin">
+    						<label class="col-md-4">Question Title :</label>
+    						<div class="col-md-6 form-group">
+	    						<input type="text" name="title" id="title" ng-model="quizquestion.question.title" class="form-control">
+	    					</div>
+    					</div>
+
+    					<div class="col-md-12 margin">
+    						<label class="col-md-8 text-center"><u>Options</u></label>
+    					</div>
+
+    					<div class="col-md-12 margin">
+    						<label class="col-md-4 ">Column A </label>
+    						<div class="col-md-6">
+    							<input type="text" name="cola" id="cola" ng-model="quizquestion.cola" class="form-control">
+    						</div>
+    					</div>
+    					<div class="col-md-12 margin">
+    						<label class="col-md-4">Column B </label>
+    						<div class="col-md-6">
+    							<input type="text" name="colb" id="colb" ng-model="quizquestion.colb" class="form-control">
+    						</div>
+    					</div>
+    					<span class="btn btn-danger margin col-md-12 margin" ng-if="quizquestion.colabblank"> {{quizquestion.errmessage}}</span>
+    					<div class="col-md-4 margin text-right">
+    						<button title="Add Option To Question" class="btn btn-primary" ng-click="quizquestion.buildOptions(quizquestion.cola,quizquestion.colb)"><i class="fa fa-plus fa-2x"></i> </button>
+    					</div>
+    					
+    				</form>
+    				</div>
+
+    				<div class="col-md-6">
+    					<div class="col-md-12 margin" ng-if="quizquestion.dummyQuestion.optionsa.length>0">
+    						<label> Match The Following: Column B Can be dragable to change the positions</label>
+    					</div>
+
+    					<div class="col-md-12 margin" ng-if="quizquestion.dummyQuestion.optionsa.length>0">
+    						<div class="col-md-6 text-center"> <h4>Column A</h4></div>
+    						<div class="col-md-6 text-center"> <h4>Column B</h4></div>
+    					</div>
+    					<div class="col-md-12">
+    					<div class="col-md-6 ">
+    						<div class="col-md-12" >
+    							<ul class="sortlist" ng-model="quizquestion.dummyQuestion.optionsa">
+								  <li class="nosortitem" ng-repeat="item in quizquestion.dummyQuestion.optionsa">{{ item.col_a }}</li>
+								</ul>
+    						</div>
+    					</div>
+
+    					<div class="col-md-6 ">
+    						<div class="col-md-12" >
+    							<ul class="sortlist" ui-sortable="quizquestion.sortableOptions"  ng-model="quizquestion.dummyQuestion.optionsb">
+								  <li class="sortitem" ng-repeat="item in quizquestion.dummyQuestion.optionsb">{{ item.col_b }}</li>
+								</ul>
+    						</div>
+    					</div>
+    					</div>
+
+    					<div class="col-md-12 text-right" ng-if="quizquestion.dummyQuestion.options.length>0||quizquestion.dummyQuestion.optionsa.length>0">
+    						<button class="btn btn-success" type="button" title="Add Question To Quiz" ng-click="quizquestion.addMatchTheFollowingQuestionToQuiz(quizquestion.quiz.quiz_type)">Add Question To Quiz</button>
+    					</div>
+
+    				</div>
+    		</div> 
+            <!-- End Of Match The Following -->
+            <!-- MCQ -->
+            <div class="row ibox-content" ng-if="quizquestion.quiz.quiz_type==1">
+                <form id="question_mcq_form" name="question_mcq_form">
+                    <div class="row margin">
+                        <div class="col-md-1">
+                            <label>Question :</label>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <textarea id="question" name="question" rows="2" class="form-control" ng-model="quizquestion.question.question" ></textarea>
+                        </div>
+                    </div>
+                    <div class="row margin">
+                        <div class="col-md-1">
+                            <label>Question Image Url:</label>
+                        </div>
+                        <div class="col-md-3 text-left ">
+                            <input type="file" name="question_image_url" id="question_image_url" >
+                        </div> 
+                        <div class="col-md-1">
+                                <label>OR</label>
+                        </div> 
+                        <div class="col-md-3 text-left">
+                            <input type="text" name="question_image_url_text" id="question_image_url_text" ng-model="quizquestion.question.question_image_url_text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row margin">
+                        <div class="col-md-1">
+                            <label>Choices Type:</label>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <div class="btn-group" ng-init="quizquestion.question.choice_type='0'">
+                                <label class="btn btn-success active" ng-model="quizquestion.question.choice_type" uib-btn-radio="'0'" ng-change="quizquestion.resetTheMcqChoices(quizquestion.question.choice_type)" >Text Choices</label>
+                                <label class="btn btn-success" ng-model="quizquestion.question.choice_type" uib-btn-radio="'1'" ng-change="quizquestion.resetTheMcqChoices(quizquestion.question.choice_type)" >Image Choices</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="textOptions" ng-if="quizquestion.question.choice_type==0">
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 1 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option1" type="text" name="option1" class="form-control" ng-model="quizquestion.question.option1"  >
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                               <label> Option 2 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option2" type="text" name="option2" class="form-control" ng-model="quizquestion.question.option2"  >
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 3 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option3" type="text" name="option3" class="form-control" ng-model="quizquestion.question.option3"  >
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 4 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option4" type="text" name="option4" class="form-control" ng-model="quizquestion.question.option4"  >
+                            </div>
+                        </div>
+                    </div>
+                    <div id="imagechoices" ng-if="quizquestion.question.choice_type==1">
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 1 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option1_url" type="file" name="option1_url" class="form-control" ng-model="quizquestion.question.option1_url">
+                            </div>
+                            <div class="col-md-1 text-left">
+                                 <label>OR </label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option1_url_text" type="text" name="option1_url_text" class="form-control" placeholder="Image Url" ng-model="quizquestion.question.option1_image_url">
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 2 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option2_url" type="file" name="option2_url" class="form-control" ng-model="quizquestion.question.option2_url">
+                            </div>
+                            <div class="col-md-1 text-left">
+                                 <label>OR </label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option2_url_text" type="text" name="option2_url_text" class="form-control" placeholder="Image Url" ng-model="quizquestion.question.option2_image_url">
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 3 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option3_url" type="file" name="option3_url" class="form-control" ng-model="quizquestion.question.option3_url">
+                            </div>
+                            <div class="col-md-1 text-left">
+                                 <label>OR</label> 
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option3_url_text" type="text" name="option3_url_text" class="form-control" placeholder="Image Url" ng-model="quizquestion.question.option3_image_url">
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 4 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option4_url" type="file" name="option4_url" class="form-control" ng-model="quizquestion.question.option4_url">
+                            </div>
+                            <div class="col-md-1 text-left">
+                                 <label>OR </label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option4_url_text" type="text" name="option4_url_text" class="form-control" placeholder="Image Url" ng-model="quizquestion.question.option4_image_url">
+                            </div>
+                        </div>
+                    </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Answer :<label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <select id="answer" name="answer" class="form-control" ng-model="quizquestion.question.answer">
+                                    <option value="">Select Option For Answer</option>
+                                    <option value="1">Option 1</option>
+                                    <option value="2">Option 2</option>
+                                    <option value="3">Option 3</option>
+                                    <option value="4">Option 4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                               <label> Answer Line :<label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="answer_line" type="text" name="answer_line" class="form-control" ng-model="quizquestion.question.answer_line">
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Explanation :<label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <textarea id="explanation" name="explanation" rows="2" class="form-control" ng-model="quizquestion.question.explanation"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-left margin" >
+                            <button class="btn btn-success" type="button" title="Add Question To Quiz" ng-click="quizquestion.addMcqQuestionToQuiz(quizquestion.quiz.quiz_type)">Add Question To Quiz</button>
+                        </div>
+                </form>
+            </div>
+            <!-- End Of MCQ -->
+
+            <!-- Slide up MCQ -->
+            <div class="row ibox-content" ng-if="quizquestion.quiz.quiz_type==2">
+                <form id="question_slideupmcq_form" name="question_slideupmcq_form">
+                    <div class="row margin">
+                        <div class="col-md-1">
+                            <label>Question :</label>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <textarea id="question" name="question" rows="2" class="form-control" ng-model="quizquestion.question.question" ></textarea>
+                        </div>
+                    </div>
+                    
+                    <div id="textOptions" >
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 1 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option1" type="text" name="option1" class="form-control" ng-model="quizquestion.question.option1"  >
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                               <label> Option 2 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option2" type="text" name="option2" class="form-control" ng-model="quizquestion.question.option2"  >
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 3 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option3" type="text" name="option3" class="form-control" ng-model="quizquestion.question.option3"  >
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 4 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option4" type="text" name="option4" class="form-control" ng-model="quizquestion.question.option4"  >
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row margin">
+                        <div class="col-md-1">
+                           <label> Answer :<label>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <select id="answer" name="answer" class="form-control" ng-model="quizquestion.question.answer">
+                                <option value="">Select Option For Answer</option>
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                                <option value="3">Option 3</option>
+                                <option value="4">Option 4</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row margin">
+                        <div class="col-md-1">
+                           <label> Answer Line :<label>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <input id="answer_line" type="text" name="answer_line" class="form-control" ng-model="quizquestion.question.answer_line">
+                        </div>
+                    </div>
+                    <div class="row margin">
+                        <div class="col-md-1">
+                           <label> Explanation :<label>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <textarea id="explanation" name="explanation" rows="2" class="form-control" ng-model="quizquestion.question.explanation"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-left margin" >
+                        <button class="btn btn-success" type="button" title="Add Question To Quiz" ng-click="quizquestion.addSlideupMcqQuestionToQuiz(quizquestion.quiz.quiz_type)">Add Question To Quiz</button>
+                    </div>
+                </form>
+            </div>
+            <!-- End of Slide uo MCQ -->
+
+            <!-- Lineup  -->
+            <div class="row ibox-content" ng-if="quizquestion.quiz.quiz_type==3">
+                <form id="question_lineupmcq_form" name="question_lineupmcq_form">
+                    <div class="row margin">
+                        <div class="col-md-1">
+                            <label>Question :</label>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <textarea id="question" name="question" rows="2" class="form-control" ng-model="quizquestion.question.question" ></textarea>
+                        </div>
+                    </div>
+                    <div class="row margin">
+                        <div class="col-md-1">
+                            <label>Lower Text :</label>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <input type="text" id="lower_text" name="lower_text" rows="2" class="form-control" ng-model="quizquestion.question.lower_text" >
+                        </div>
+                    </div>
+                    <div class="row margin">
+                        <div class="col-md-1">
+                            <label>Higher Text :</label>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <input type="text" id="higher_text" name="higher_text"  class="form-control" ng-model="quizquestion.question.higher_text" >
+                        </div>
+                    </div>
+                    <div class="row margin">
+                        <div class="col-md-1">
+                            <label>Time :</label>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <input type="text" id="time" name="time" class="form-control" ng-model="quizquestion.question.time" placeholder="Time in Seconds (Ex:3000 = 3 seconds)">
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="row margin" ng-repeat="option in quizquestion.question.options">
+                        <div class="col-md-1">
+                            <label>Option {{option.index}} :</label>
+                        </div>
+                        <div class="col-md-4 text-left">
+                            <input id="option{{option.index}}" type="text" name="option{{option.index}}" class="form-control options" ng-model="option.text" placeholder="Option {{option.index}} Text" >
+                        </div>
+
+                        <div class="col-md-2">
+                            <label>Option {{option.index}} Preadd :</label>
+                        </div>
+                        <div class="col-md-4 text-left">
+                            <input id="preadd{{option.index}}" type="radio" name="preadd{{option.index}}" class="preadd" ng-model="option.preadd" placeholder="Option {{option.index}} Text" value=true >True &nbsp;&nbsp;&nbsp;
+                            <input id="answer{{option.index}}" type="radio" name="preadd{{option.index}}" class=" preadd" ng-model="option.preadd" placeholder="Option {{option.index}} Text" value=false >False
+                        </div>
+                        <span class="col-md-1 text-left" ng-if="$last&&option.index>4" ng-click="quizquestion.removeLastOption($index)"><i class="fa fa-trash fa-2x"></i></span>
+
+
+                    </div>
+                    <div class="row margin">
+                        <div class="col-md-5 text-right">
+                            <a href="" ng-click="quizquestion.addNewOption(quizquestion.question.options,quizquestion.quiz.quiz_type)">  Add New Option</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12 text-left margin" >
+                        <button class="btn btn-success" type="button" title="Add Question To Quiz" ng-click="quizquestion.addLineupQuestionToQuiz(quizquestion.quiz.quiz_type)">Add Question To Quiz</button>
+                    </div>
+                </form>
+            </div>
+            <!-- End of Lineup -->
+
+            <!-- True Or False -->
+            <div class="row ibox-content" ng-if="quizquestion.quiz.quiz_type==4">
+                <form id="question_truefalse_form" name="question_truefalse_form">
+                    <div class="row margin">
+                        <div class="col-md-1">
+                            Question :
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <textarea id="question" name="question" rows="2" class="form-control" ng-model="quizquestion.question.question" ></textarea>
+                        </div>
+                    </div>
+                    <div class="row margin">
+                        <div class="col-md-1 col-lg-1">
+                            Answer :
+                        </div>
+                        <div class="col-md-1 col-lg-1 text-left">
+                               <input type="radio" name="answer" value="1" ng-model="quizquestion.question.answer"> True
+                        </div>
+                        <div class="col-md-1 col-lg-1 text-left">
+                               <input type="radio" name="answer" value="0" ng-model="quizquestion.question.answer"> False
+                        </div>
+                    </div>
+                    <div class="row margin">
+                        <div class="col-md-1">
+                            Image  :
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <input type="file" name="image_url" id="image_url">
+                        </div>
+                        <div class="col-md-1">
+                                <label>OR</label>
+                        </div> 
+                        <div class="col-md-3 text-left">
+                            <input type="text" name="image_url_text" id="image_url_text" ng-model="quizquestion.question.image_url_text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row margin">
+                        <div class="col-md-1">
+                            Explanation :
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <textarea id="explanation" name="explanation" rows="2" class="form-control" ng-model="quizquestion.question.explanation"></textarea>
+                        </div>
+                    </div>
+                    <div class="row margin">
+                        <div class="col-md-6 text-left">
+                            <button id="addQuestionMain" class="btn btn-primary" type="submit" ng-click='quizquestion.addTrueFalseQuestionToQuiz(quizquestion.quiz.quiz_type)'>Add Question To Quiz</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- End Of True Or False -->
+
+            <!-- Video MCQ Question -->
+           <div class="row ibox-content" ng-if="quizquestion.quiz.quiz_type==5">
+                <form id="question_videomcq_form" name="question_videomcq_form">
+                    <div class="row margin">
+                        <div class="col-md-1">
+                            <label>Question :</label>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <textarea id="question" name="question" rows="2" class="form-control" ng-model="quizquestion.question.question" ></textarea>
+                        </div>
+                    </div>
+                    <div class="row margin">
+                        <div class="col-md-1">
+                            <label>Choices Type:</label>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <div class="btn-group" ng-init="quizquestion.question.questionType='1'">
+                                <label class="btn btn-success active" ng-model="quizquestion.question.questionType" uib-btn-radio="'1'"  >Text Choices</label>
+                                <label class="btn btn-success" ng-model="quizquestion.question.questionType" uib-btn-radio="'2'"  >Image With Text Choices</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="textOptions" ng-if="quizquestion.question.questionType==1">
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 1 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option1" type="text" name="option1" class="form-control" ng-model="quizquestion.question.option1" placeholder="Option 1 Text" >
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                               <label> Option 2 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option2" type="text" name="option2" class="form-control" ng-model="quizquestion.question.option2"  placeholder="Option 2 Text">
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 3 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option3" type="text" name="option3" class="form-control" ng-model="quizquestion.question.option3"  placeholder="Option 3 Text">
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 4 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option4" type="text" name="option4" class="form-control" ng-model="quizquestion.question.option4" placeholder="Option 4 Text" >
+                            </div>
+                        </div>
+                    </div>
+                    <div id="imagechoices" ng-if="quizquestion.question.questionType==2">
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 1 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option1_url" type="file" name="option1_url" class="form-control" ng-model="quizquestion.question.option1_url">
+                            </div>
+                            <div class="col-md-1 text-left">
+                                 <label>OR </label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option1_url_text" type="text" name="option1_url_text" class="form-control" placeholder="Image Url" ng-model="quizquestion.question.option1_image_url">
+                            </div>
+
+                            <div class="col-md-1 text-left">
+                                 <label>And/Or </label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option1_text" type="text" name="option1_text" class="form-control" placeholder="Option 1 Text" ng-model="quizquestion.question.option1_text">
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 2 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option2_url" type="file" name="option2_url" class="form-control" ng-model="quizquestion.question.option2_url">
+                            </div>
+                            <div class="col-md-1 text-left">
+                                 <label>OR </label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option2_url_text" type="text" name="option2_url_text" class="form-control" placeholder="Image Url" ng-model="quizquestion.question.option2_image_url">
+                            </div>
+                            <div class="col-md-1 text-left">
+                                 <label>And/Or </label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option2_text" type="text" name="option2_text" class="form-control" placeholder="Option 2 Text" ng-model="quizquestion.question.option2_text">
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 3 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option3_url" type="file" name="option3_url" class="form-control" ng-model="quizquestion.question.option3_url">
+                            </div>
+                            <div class="col-md-1 text-left">
+                                 <label>OR</label> 
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option3_url_text" type="text" name="option3_url_text" class="form-control" placeholder="Image Url" ng-model="quizquestion.question.option3_image_url">
+                            </div>
+                            <div class="col-md-1 text-left">
+                                 <label>And/Or </label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option3_text" type="text" name="option3_text" class="form-control" placeholder="Option 3 Text" ng-model="quizquestion.question.option3_text">
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label>Option 4 :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option4_url" type="file" name="option4_url" class="form-control" ng-model="quizquestion.question.option4_url">
+                            </div>
+                            <div class="col-md-1 text-left">
+                                 <label>OR </label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option4_url_text" type="text" name="option4_url_text" class="form-control" placeholder="Image Url" ng-model="quizquestion.question.option4_image_url">
+                            </div>
+                            <div class="col-md-1 text-left">
+                                 <label>And/Or </label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <input id="option4_text" type="text" name="option4_text" class="form-control" placeholder="Option 4 Text" ng-model="quizquestion.question.option4_text">
+                            </div>
+                        </div>
+                    </div>
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                 <label>Answer :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <select id="answer" name="answer" class="form-control" ng-model="quizquestion.question.answer">
+                                    <option value="">Select Option For Answer</option>
+                                    <option value="1">Option 1</option>
+                                    <option value="2">Option 2</option>
+                                    <option value="3">Option 3</option>
+                                    <option value="4">Option 4</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row margin">
+                            <div class="col-md-1">
+                                <label> Explanation :</label>
+                            </div>
+                            <div class="col-md-3 text-left">
+                                <textarea id="explanation" name="explanation" rows="2" class="form-control" ng-model="quizquestion.question.explanation"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-left margin" >
+                            <button class="btn btn-success" type="button" title="Add Question To Quiz" ng-click="quizquestion.addVideoQuestionToQuiz(quizquestion.quiz.quiz_type)">Add Question To Quiz</button>
+                        </div>
+                </form>      
+           </div>
+           <!-- End Of Video MCQ Question -->
+
+           <!-- Pick 5 Questions -->
+           <div class="row ibox-content" ng-if="quizquestion.quiz.quiz_type==7">
+                <form id="question_pick5_form" name="question_pick5_form">
+                    <div class="row margin">
+                        <div class="col-md-1">
+                            <label>Question :</label>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <textarea id="question" name="question" rows="2" class="form-control" ng-model="quizquestion.question.question" ></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="row margin" ng-repeat="option in quizquestion.question.options">
+                        <div class="col-md-1">
+                            <label>Option {{option.index}} :</label>
+                        </div>
+                        <div class="col-md-4 text-left">
+                            <input id="option{{option.index}}" type="text" name="option{{option.index}}" class="form-control options" ng-model="option.text" placeholder="Option {{option.index}} Text" >
+                        </div>
+
+                        <div class="col-md-2">
+                            <label>Option {{option.index}} Answer :</label>
+                        </div>
+                        <div class="col-md-4 text-left">
+                            <input id="answer{{option.index}}" type="radio" name="answer{{option.index}}" class=" answer" ng-model="option.answer" placeholder="Option {{option.index}} Text" value="1" >True &nbsp;&nbsp;&nbsp;
+                            <input id="answer{{option.index}}" type="radio" name="answer{{option.index}}" class=" answer" ng-model="option.answer" placeholder="Option {{option.index}} Text" value="0" >False
+                        </div>
+                        <span class="col-md-1 text-left" ng-if="$last&&option.index>5" ng-click="quizquestion.removeLastOption($index)"><i class="fa fa-trash fa-2x"></i></span>
+
+
+                    </div>
+                    <div class="row margin">
+                        <div class="col-md-5 text-right">
+                            <a href="" ng-click="quizquestion.addNewOption(quizquestion.question.options,quizquestion.quiz.quiz_type)">  Add New Option</a>
+                        </div>
+                    </div>
+                        
+                    <div class="row margin">
+                        <div class="col-md-1">
+                            <label> Explanation :</label>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <textarea id="explanation" name="explanation" rows="2" class="form-control" ng-model="quizquestion.question.explanation"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-left margin" >
+                        <button class="btn btn-success" type="button" title="Add Question To Quiz" ng-click="quizquestion.addPick5QuestionToQuiz(quizquestion.quiz.quiz_type)">Add Question To Quiz</button>
+                    </div>
+                </form>      
+           </div>
+           <!-- End of Pick 5 Qeustion -->
+    	</div>
+    	<div class="row ibox-content" ng-if="quizquestion.radioModel=='view'">
+    	   
+            <!-- Match The Follwing View Question -->
+            <div class="col-lg-12" ng-if="quizquestion.quiz.quiz_type==6">
+                <uib-accordion close-others="quizquestion.oneAtATime" ng-if="quizquestion.quiz.question_json.questions.length>0">
+                    <div uib-accordion-group class="panel-default" ng-repeat="que in quizquestion.quiz.question_json.questions" ng-init="que.isCustomHeaderOpen=false" is-open="que.isCustomHeaderOpen">
+                        <uib-accordion-heading >
+                            Question Title : {{que.title}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': que.isCustomHeaderOpen, 'glyphicon-chevron-right': !que.isCustomHeaderOpen}"></i>
+                        </uib-accordion-heading>
+                        <div class="col-md-12 margin" ng-if="que.options.length>0">
+                            <div class="col-md-4 text-center"> <u><h4>Column A</h4></u></div>
+                            <div class="col-md-4 text-center"> <u><h4>Column B</h4></u></div>
+                            <div class="col-md-4 text-center"> <u><h4>Column B Index</h4></u></div>
+                        </div>
+                        <div class="col-md-12 margin" ng-if="que.options.length>0" ng-repeat="op in que.options">
+                            <div class="col-md-4 text-center"> <h4>{{op.col_a}}</h4></div>
+                            <div class="col-md-4 text-center"> <h4>{{op.col_b}}</h4></div>
+                            <div class="col-md-4 text-center"> <h4>{{op.col_b_index}}</h4></div>
+                        </div>
+                    </div>
+                </uib-accordion>
+                <div class="row text-center" ng-if="!quizquestion.quiz.question_json.questions||quizquestion.quiz.question_json.questions.length==0"> 
+                    <h4>No Questions Found.</h4>
+                </div>
+           </div>
+           <!-- End Of Match The Follwing View Question -->
+
+           <!-- MCQ Questions Add Question -->
+           <div class="col-lg-12" ng-if="quizquestion.quiz.quiz_type==1">
+                <uib-accordion close-others="quizquestion.oneAtATime" ng-if="quizquestion.quiz.question_json.items.length>0">
+                    <div uib-accordion-group class="panel-default" ng-repeat="que in quizquestion.quiz.question_json.items" ng-init="que.isCustomHeaderOpen=false" is-open="que.isCustomHeaderOpen">
+                        <uib-accordion-heading >
+                            Question Title : {{que.question||que.question_image_url}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': que.isCustomHeaderOpen, 'glyphicon-chevron-right': !que.isCustomHeaderOpen}"></i>
+                        </uib-accordion-heading>
+                        <div class="col-md-12 accordinView">
+                            <div class="row margin text-left">
+                               <u><h3> Options</h3></u>
+                            </div>
+                            <div class="col-md-12 margin" ng-repeat="choice in que.choices"> 
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><h4>Option{{$index+1}} Text</h4> </div>
+                                    <div class="col-md-1">: </div>
+                                    <div class="col-md-2 text-left">{{choice.option}}</div>
+                                    
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><h4>Option{{$index+1}} Index</h4> </div>
+                                    <div class="col-md-1">: </div>
+                                    <div class="col-md-2 text-left">{{choice.index}}</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row margin ">
+                            <div class="col-md-2"><h4>Answer</h4>  </div>
+                            <div class="col-md-1">: </div>
+                            <div class="col-md-2 text-left"> Option {{que.answer}}</div>
+                            
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-2"><h4>Answer  Line</h4></div>
+                            <div class="col-md-1">: </div>
+                            <div class="col-md-2 text-left">{{que.answer_line}}</div>
+                            
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-2"><h4>Explanation</h4></div>
+                            <div class="col-md-1">: </div>
+                            <div class="col-md-2 text-left">{{que.explanation}}</div>
+                            
+                        </div>
+                    </div>
+                </uib-accordion>
+                <div class="row text-center" ng-if="!quizquestion.quiz.question_json.items||quizquestion.quiz.question_json.items.length==0"> 
+                    <h4>No Questions Found.<h4>
+                </div>
+           </div>
+           <!-- End Of MCQ View Question -->
+
+           <!-- Slideup MCQ Questions Add Question -->
+           <div class="col-lg-12" ng-if="quizquestion.quiz.quiz_type==2">
+                <uib-accordion close-others="quizquestion.oneAtATime" ng-if="quizquestion.quiz.question_json.items.length>0">
+                    <div uib-accordion-group class="panel-default" ng-repeat="que in quizquestion.quiz.question_json.items" ng-init="que.isCustomHeaderOpen=false" is-open="que.isCustomHeaderOpen">
+                        <uib-accordion-heading >
+                            Question Title : {{que.question}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': que.isCustomHeaderOpen, 'glyphicon-chevron-right': !que.isCustomHeaderOpen}"></i>
+                        </uib-accordion-heading>
+                        <div class="col-md-12 accordinView">
+                            <div class="row margin text-left">
+                                <h3><u> Options</h3></u>
+                            </div>
+                            <div class="col-md-12 margin" ng-repeat="choice in que.choices"> 
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><h4>Option{{$index+1}} Text</h4> </div>
+                                    <div class="col-md-1">: </div>
+                                    <div class="col-md-2 text-left">{{choice.option}}</div>
+                                    
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><h4>Option{{$index+1}} Index</h4> </div>
+                                    <div class="col-md-1">: </div>
+                                    <div class="col-md-2 text-left">{{choice.index}}</div>
+                                </div>
+
+                            </div>
+                            <div class="row margin ">
+                                <div class="col-md-2"><h4>Answer</h4>  </div>
+                                <div class="col-md-1">: </div>
+                                <div class="col-md-2 text-left"> Option {{que.answer}}</div>
+                                
+                            </div>
+                            <div class="row margin">
+                                <div class="col-md-2"><h4>Answer  Line</h4></div>
+                                <div class="col-md-1">: </div>
+                                <div class="col-md-2 text-left">{{que.answer_line}}</div>
+                                
+                            </div>
+                            <div class="row margin">
+                                <div class="col-md-2"><h4>Explanation</h4></div>
+                                <div class="col-md-1">: </div>
+                                <div class="col-md-2 text-left">{{que.explanation}}</div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </uib-accordion>
+                <div class="row text-center" ng-if="!quizquestion.quiz.question_json.items||quizquestion.quiz.question_json.items.length==0"> 
+                    <h4>No Questions Found.<h4>
+                </div>
+           </div>
+           <!-- End Of Slide MCQ View Question -->
+
+           <!-- True False Question -->
+           <div class="col-lg-12" ng-if="quizquestion.quiz.quiz_type==4">
+                <uib-accordion close-others="quizquestion.oneAtATime" ng-if="quizquestion.quiz.question_json.items.length>0">
+                    <div uib-accordion-group class="panel-default" ng-repeat="que in quizquestion.quiz.question_json.items" ng-init="que.isCustomHeaderOpen=false" is-open="que.isCustomHeaderOpen">
+                        <uib-accordion-heading >
+                            Question Title : {{que.question}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': que.isCustomHeaderOpen, 'glyphicon-chevron-right': !que.isCustomHeaderOpen}"></i>
+                        </uib-accordion-heading>
+                        <div class="col-md-12 accordinView">
+                            <div class="row margin ">
+                                <div class="col-md-2"><h4>Answer</h4>  </div>
+                                <div class="col-md-1">: </div>
+                                <div class="col-md-2 text-left"> {{que.answer==0?"False":"True"}}</div>
+                                
+                            </div>
+                            <div class="row margin">
+                                <div class="col-md-2"><h4>Explanation</h4></div>
+                                <div class="col-md-1">: </div>
+                                <div class="col-md-2 text-left">{{que.explanation}}</div>
+                                
+                            </div>
+                            <div class="row margin">
+                                <div class="col-md-2"><h4>Image Url</h4></div>
+                                <div class="col-md-1">: </div>
+                                <div class="col-md-2 text-left">{{que.image_url}}</div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </uib-accordion>
+                <div class="row text-center" ng-if="!quizquestion.quiz.question_json.items||quizquestion.quiz.question_json.items.length==0"> 
+                    <h4>No Questions Found.<h4>
+                </div>
+           </div>
+           <!-- End of True False Question -->
+
+           <!-- Video MCQ Question -->
+           <div class="col-lg-12" ng-if="quizquestion.quiz.quiz_type==5">
+                <uib-accordion close-others="quizquestion.oneAtATime" ng-if="quizquestion.quiz.question_json.questionList.length>0">
+                    <div uib-accordion-group class="panel-default" ng-repeat="que in quizquestion.quiz.question_json.questionList" ng-init="que.isCustomHeaderOpen=false" is-open="que.isCustomHeaderOpen">
+                        <uib-accordion-heading >
+                            Question Title : {{que.questionText}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': que.isCustomHeaderOpen, 'glyphicon-chevron-right': !que.isCustomHeaderOpen}"></i>
+                        </uib-accordion-heading>
+                        <div class="col-md-12 accordinView">
+                            <div class="row margin text-left">
+                               <u><h3> Options</h3></u>
+                            </div>
+                            <div class="col-md-12 margin" ng-repeat="choice in que.optionList"> 
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><h4>Option{{$index+1}} Text</h4> </div>
+                                    <div class="col-md-1">: </div>
+                                    <div class="col-md-2 text-left">{{choice.option}}</div>
+                                    
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><h4>Option{{$index+1}} No</h4> </div>
+                                    <div class="col-md-1">: </div>
+                                    <div class="col-md-2 text-left">{{choice.optionNo}}</div>
+                                    
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><h4>Option{{$index+1}} Link</h4> </div>
+                                    <div class="col-md-1">: </div>
+                                    <div class="col-md-2 text-left">{{choice.imageLink}}</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row margin ">
+                            <div class="col-md-2"><h4>Answer</h4>  </div>
+                            <div class="col-md-1">: </div>
+                            <div class="col-md-2 text-left"> Option {{que.correctAns}}</div>
+                            
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-2"><h4>Explanation</h4></div>
+                            <div class="col-md-1">: </div>
+                            <div class="col-md-2 text-left">{{que.explanation}}</div>
+                            
+                        </div>
+                    </div>
+                </uib-accordion>
+                
+                <div class="row text-center" ng-if="!quizquestion.quiz.question_json.questionList||quizquestion.quiz.question_json.questionList.length==0"> 
+                    <h4>No Questions Found.</h4>
+                </div>  
+           </div>
+           <!-- End Of Video MCQ Question -->
+
+           <!-- Pick 5 Questions -->
+           <div class="col-lg-12" ng-if="quizquestion.quiz.quiz_type==7">
+                <uib-accordion close-others="quizquestion.oneAtATime" ng-if="quizquestion.quiz.question_json.questions.length>0">
+                    <div uib-accordion-group class="panel-default" ng-repeat="que in quizquestion.quiz.question_json.questions" ng-init="que.isCustomHeaderOpen=false" is-open="que.isCustomHeaderOpen">
+                        <uib-accordion-heading >
+                            Question Title : {{que.question}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': que.isCustomHeaderOpen, 'glyphicon-chevron-right': !que.isCustomHeaderOpen}"></i>
+                        </uib-accordion-heading>
+                        <div class="col-md-12 accordinView">
+                            <div class="row margin text-left">
+                               <u><h3> Options</h3></u>
+                            </div>
+                            <div class="col-md-12 margin" ng-repeat="choice in que.items"> 
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><h4>Option{{$index+1}} Text</h4> </div>
+                                    <div class="col-md-1">: </div>
+                                    <div class="col-md-2 text-left">{{choice.text}}</div>
+                                    
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><h4>Option{{$index+1}} Answer</h4> </div>
+                                    <div class="col-md-1">: </div>
+                                    <div class="col-md-2 text-left">{{choice.answer==0?"False":"True"}}</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-2"><h4>Explanation</h4></div>
+                            <div class="col-md-1">: </div>
+                            <div class="col-md-2 text-left">{{que.explanation}}</div>
+                            
+                        </div>
+                    </div>
+                </uib-accordion>
+                
+                <div class="row text-center" ng-if="!quizquestion.quiz.question_json.questions||quizquestion.quiz.question_json.questions.length==0"> 
+                    <h4>No Questions Found.</h4>
+                </div>  
+           </div>
+           <!-- End Of Pick 5-->
+
+           <!-- Pick 5 Questions -->
+           <div class="col-lg-12" ng-if="quizquestion.quiz.quiz_type==3">
+                <uib-accordion close-others="quizquestion.oneAtATime" ng-if="quizquestion.quiz.question_json.question!=''">
+                    <div uib-accordion-group class="panel-default"  ng-init="quizquestion.quiz.question_json.isCustomHeaderOpen=false" is-open="quizquestion.quiz.question_json.isCustomHeaderOpen">
+                        <uib-accordion-heading >
+                            Question Title : {{quizquestion.quiz.question_json.question}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': quizquestion.quiz.question_json.isCustomHeaderOpen, 'glyphicon-chevron-right': !quizquestion.quiz.question_json.isCustomHeaderOpen}"></i>
+                        </uib-accordion-heading>
+                        <div class="col-md-12 accordinView">
+                            <div class="row margin text-left">
+                               <u><h3> Options</h3></u>
+                            </div>
+                            <div class="col-md-12 margin" ng-repeat="choice in quizquestion.quiz.question_json.options"> 
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><h4>Option{{$index+1}} Text</h4> </div>
+                                    <div class="col-md-1">: </div>
+                                    <div class="col-md-2 text-left">{{choice.text}}</div>
+                                    
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><h4>Option{{$index+1}} Preadd</h4> </div>
+                                    <div class="col-md-1">: </div>
+                                    <div class="col-md-2 text-left">{{choice.preadd==false?"False":"True"}}</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-2"><h4>Lower Text</h4></div>
+                            <div class="col-md-1">: </div>
+                            <div class="col-md-2 text-left">{{quizquestion.quiz.question_json.lower_text}}</div>
+                            
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-2"><h4>Higher Text</h4></div>
+                            <div class="col-md-1">: </div>
+                            <div class="col-md-2 text-left">{{quizquestion.quiz.question_json.higher_text}}</div>
+                            
+                        </div>
+                        <div class="row margin">
+                            <div class="col-md-2"><h4>Time</h4></div>
+                            <div class="col-md-1">: </div>
+                            <div class="col-md-2 text-left">{{quizquestion.quiz.question_json.time}}</div>
+                            
+                        </div>
+                    </div>
+                </uib-accordion>
+                
+                <div class="row text-center" ng-if="!quizquestion.quiz.question_json.question!=''"> 
+                    <h4>No Questions Found.</h4>
+                </div>  
+           </div>
+
+           <!-- End of pick 5 Questions -->
+
+           <!-- Bucket -->
+           <div class="col-lg-12" ng-if="quizquestion.quiz.quiz_type==8">
+                <uib-accordion close-others="quizquestion.oneAtATime" ng-if="quizquestion.quiz.question_json.items.length>0">
+                    <div uib-accordion-group class="panel-default" ng-repeat="que in quizquestion.quiz.question_json.items" ng-init="que.isCustomHeaderOpen=false" is-open="que.isCustomHeaderOpen">
+                        <uib-accordion-heading >
+                            Question {{$index}}: {{que.text}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': que.isCustomHeaderOpen, 'glyphicon-chevron-right': !que.isCustomHeaderOpen}"></i>
+                        </uib-accordion-heading>
+                        <div class="col-md-12">
+                            <div class="col-md-2"><h4>Bucket 1 Text</h4> </div>
+                            <div class="col-md-1">: </div>
+                            <div class="col-md-2 text-left">{{que.bucket_1_text}}</div>
+                            
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-2"><h4>Bucket 2 Text</h4> </div>
+                            <div class="col-md-1">: </div>
+                            <div class="col-md-2 text-left">{{que.bucket_2_text}}</div>
+                            
+                        </div>
+                        <div class="col-md-12 accordinView">
+                            <!-- <div class="row margin text-left">
+                               <u><h3> Options</h3></u>
+                            </div> -->
+                            <div class="col-md-12 margin" > 
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><h4>Option{{$index+1}} Text</h4> </div>
+                                    <div class="col-md-1">: </div>
+                                    <div class="col-md-2 text-left">{{que.text}}</div>
+                                    
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><h4>Option{{$index+1}} Explanation</h4> </div>
+                                    <div class="col-md-1">: </div>
+                                    <div class="col-md-2 text-left">{{que.explanation}}</div>
+                                    
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><h4>Option{{$index+1}} Image</h4> </div>
+                                    <div class="col-md-1">: </div>
+                                    <div class="col-md-2 text-left">{{que.image_url}}</div>
+                                    
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><h4>Option{{$index+1}} Bucket</h4> </div>
+                                    <div class="col-md-1">: </div>
+                                    <div class="col-md-2 text-left">Bucket {{que.bucket}}</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-accordion>
+                <div class="row text-center" ng-if="!quizquestion.quiz.question_json.items||quizquestion.quiz.question_json.items.length==0"> 
+                    <h4>No Questions Found.</h4>
+                </div>
+           </div>
+           <!-- End of Bucket Qs-->
+
+
+    	</div>
+    </div>
+

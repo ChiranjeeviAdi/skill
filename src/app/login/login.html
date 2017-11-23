@@ -1,0 +1,21 @@
+<div class="middle-box text-center loginscreen   animated fadeInDown">
+    <div>
+        <div>
+
+            <h1 class="logo-name">Smartskill</h1>
+
+        </div>
+        <form class="m-t" role="form" id="loginForm" name="loginForm">
+           
+            <div class="form-group">
+                <input id="email" name="email" type="text" class="form-control" placeholder="Email" ng-model="login.admin.email">
+            </div>
+            <div class="form-group">
+                <input id="password" name="password" type="password" class="form-control" placeholder="Password"  ng-model="login.admin.password">
+            </div>
+
+            
+            <button type="submit" class="btn btn-primary full-width" ng-click="login.loginAsUser(login.admin)">Login</button>
+        </form>
+    </div>
+</div>
